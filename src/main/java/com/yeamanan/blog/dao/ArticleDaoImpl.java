@@ -37,8 +37,8 @@ public class ArticleDaoImpl extends BlogDao
         int result;
         getCurrentSession();
         getSession().beginTransaction();
-        result = (Integer) getSession().createQuery("Article.count")
-                .uniqueResult();
+        result = (Integer) getSession().getNamedQuery("Article.getAll")
+                .list().size();
         getSession().getTransaction().commit();
         return result;
     }
@@ -52,7 +52,8 @@ public class ArticleDaoImpl extends BlogDao
         getCurrentSession();
         getSession().beginTransaction();
         List<Article> articles;
-        articles = getSession().createQuery("Article.selectAll").list();
+        articles = getSession().getNamedQuery("Article.getAll").list();
+        //articles = getSession().createQuery("from Article").list();
         getSession().getTransaction().commit();
         return articles;
     }
@@ -68,8 +69,8 @@ public class ArticleDaoImpl extends BlogDao
         getCurrentSession();
         getSession().beginTransaction();
         Article article;
-        article = (Article) getSession().createQuery("Article.selectById")
-                .setString("id", locId);
+        article = (Article) getSession().getNamedQuery("Article.getById")
+                .setString("id", locId).uniqueResult();
         getSession().getTransaction().commit();
         return article;
     }
@@ -81,7 +82,7 @@ public class ArticleDaoImpl extends BlogDao
     public final void remove() {
         getCurrentSession();
         getSession().beginTransaction();
-        getSession().createQuery("Article.deleteAll");
+        getSession().getNamedQuery("Article.deleteAll");
         getSession().getTransaction().commit();
     }
 
@@ -94,7 +95,7 @@ public class ArticleDaoImpl extends BlogDao
         final String locId = String.valueOf(argId);
         getCurrentSession();
         getSession().beginTransaction();
-        getSession().createQuery("Article.deleteById").setString("id", locId);
+        getSession().getNamedQuery("Article.deleteById").setString("id", locId);
         getSession().getTransaction().commit();
     }
 

@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -20,14 +22,12 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "ARTICLES")
 @NamedQueries({
-    @NamedQuery(name = "Article.count",
-        query = "SELECT COUNT(*) FROM Article a"),
-    @NamedQuery(name = "Article.selectAll", query = "SELECT a FROM Article a"),
-    @NamedQuery(name = "Article.selectById",
-        query = "SELECT a FROM Article a WHERE a.id = :id"),
-    @NamedQuery(name = "Article.deleteAll", query = "DELETE FROM Article a"),
+    @NamedQuery(name = "Article.getAll", query = "select a from Article a"),
+    @NamedQuery(name = "Article.getById",
+        query = "select a from Article a where a.id = :id"),
+    @NamedQuery(name = "Article.deleteAll", query = "delete from Article a"),
     @NamedQuery(name = "Article.deleteById",
-        query = "DELETE FROM Article a WHERE a.id = :id")
+        query = "delete from Article a where a.id = :id")
 })
 public class Article implements Serializable {
 
@@ -58,6 +58,14 @@ public class Article implements Serializable {
     @Basic(optional = false)
     @Column(name = "CONTENT")
     private String content;
+
+    /**
+     * Author of the article.
+     */
+    @Basic(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "AUTHOR_ID")
+    private User author;
 
     /**
      * Article Constructor.
@@ -137,4 +145,19 @@ public class Article implements Serializable {
         this.content = argContent;
     }
 
+    /**
+     * getAuthor() method.
+     * @return The author of the article
+     */
+    public User getAuthor() {
+        return this.author;
+    }
+
+    /**
+     * setAuthor(String) method.
+     * @param argAuthor The author to set
+     */
+    public void setAuthor(final User argAuthor) {
+        this.author = argAuthor;
+    }
 }
