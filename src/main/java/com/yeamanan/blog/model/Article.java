@@ -11,14 +11,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
  * Article class.
  * @author Yeam Anan (yeamanan@gmail.com)
  */
-@XmlRootElement
+@XmlRootElement(name = "article")
+@XmlType(propOrder = { "id", "title", "content", "author" })
 @Entity
 @Table(name = "ARTICLES")
 @NamedQueries({
@@ -101,6 +105,7 @@ public class Article implements Serializable {
      * getId() method.
      * @return The id of the article
      */
+    @XmlAttribute
     public int getId() {
         return this.id;
     }
@@ -117,6 +122,7 @@ public class Article implements Serializable {
      * getTitle() method.
      * @return The title of the article
      */
+    @XmlElement
     public String getTitle() {
         return this.title;
     }
@@ -133,6 +139,7 @@ public class Article implements Serializable {
      * getContent() method.
      * @return The content of the article
      */
+    @XmlElement
     public String getContent() {
         return this.content;
     }
@@ -149,6 +156,7 @@ public class Article implements Serializable {
      * getAuthor() method.
      * @return The author of the article
      */
+    @XmlElement
     public User getAuthor() {
         return this.author;
     }

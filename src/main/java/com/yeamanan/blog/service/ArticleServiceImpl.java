@@ -12,7 +12,7 @@ import java.util.List;
 public class ArticleServiceImpl implements ArticleService {
 
     /**
-     * TODO.
+     * Article Dao.
      */
     private ArticleDao articleDao;
 

@@ -9,14 +9,18 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
  * User class.
  * @author Yeam Anan (yeamanan@gmail.com)
  */
-@XmlRootElement
+@XmlRootElement(name = "user")
+@XmlType(propOrder = { "id", "login", "password" })
 @Entity
 @Table(name = "USERS")
 @NamedQueries({
@@ -93,6 +97,7 @@ public class User implements Serializable {
      * getId() method.
      * @return The id of the article
      */
+    @XmlAttribute
     public int getId() {
         return this.id;
     }
@@ -109,6 +114,7 @@ public class User implements Serializable {
      * getLogin() method.
      * @return The login of the user
      */
+    @XmlElement
     public String getLogin() {
         return this.login;
     }
@@ -125,6 +131,7 @@ public class User implements Serializable {
      * getPassord() method.
      * @return The password of the user
      */
+    @XmlElement
     public String getPassword() {
         return this.password;
     }
