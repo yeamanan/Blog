@@ -21,7 +21,7 @@ import javax.ws.rs.core.UriInfo;
 
 /**
  * CommentsResource class.
- * @author Yeam Anan (yeamanan@gmail.com)
+ * @author Camelia
  */
 @Path("/comments")
 public class CommentsResource {

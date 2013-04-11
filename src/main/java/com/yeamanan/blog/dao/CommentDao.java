@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * CommentDao interface.
- * @author Yeam Anan (yeamanan@gmail.com)
+ * @author Camelia
  */
 public interface CommentDao {
 

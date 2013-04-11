@@ -18,7 +18,7 @@ import javax.xml.bind.JAXBElement;
 
 /**
  * CommentResource class.
- * @author Yeam Anan (yeamanan@gmail.com)
+ * @author Camelia
  */
 public class CommentResource {
 
