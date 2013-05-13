@@ -2,32 +2,22 @@ package com.yeamanan.blog.dao;
 
 import com.yeamanan.blog.model.Comment;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
 /**
  * CommentDaoImpl class is an implementation of CommentDao interface.
  * @author Camelia
  */
+@Repository
 public class CommentDaoImpl extends BlogDao
     implements CommentDao {
-    
-    
-    /**
-     * Singleton of the class.
-     */
-    private static CommentDaoImpl instance = null;
 
     /**
-     * getInstance() method.
-     * @return the singleton of the class
+     * Constructor.
      */
-    public static CommentDaoImpl getInstance() {
-        synchronized (CommentDaoImpl.class) {
-            if (instance == null) {
-                instance = new CommentDaoImpl();
-            }
-        }
-        return instance;
-    }
+//    public CommentDaoImpl() {
+//        super();
+//    }
 
     /**
      * count() method.
@@ -54,7 +44,6 @@ public class CommentDaoImpl extends BlogDao
         getSession().beginTransaction();
         List<Comment> comments;
         comments = getSession().getNamedQuery("Comment.getAll").list();
-        //comments = getSession().createQuery("from Comment").list();
         getSession().getTransaction().commit();
         return comments;
     }

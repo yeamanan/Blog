@@ -18,13 +18,22 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * ArticlesResource class.
  * @author Yeam Anan (yeamanan@gmail.com)
  */
+@Component
 @Path("/articles")
 public class ArticlesResource {
+
+    /**
+     * TODO.
+     */
+    @Autowired
+    private ArticleService articleService;
 
     /**
      * TODO.
@@ -46,7 +55,6 @@ public class ArticlesResource {
     @Produces(MediaType.TEXT_XML)
     public final List<Article> getHTML() {
         final List<Article> articles = new ArrayList<Article>();
-        final ArticleService articleService = new ArticleServiceImpl();
         articles.addAll(articleService.get());
         return articles;
     }
@@ -59,7 +67,6 @@ public class ArticlesResource {
     @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
     public final List<Article> getXML() {
         final List<Article> articles = new ArrayList<Article>();
-        final ArticleService articleService = new ArticleServiceImpl();
         articles.addAll(articleService.get());
         return articles;
     }
@@ -72,7 +79,6 @@ public class ArticlesResource {
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
     public final String getCount() {
-        final ArticleService articleService = new ArticleServiceImpl();
         return String.valueOf(articleService.count());
     }
 
@@ -90,7 +96,6 @@ public class ArticlesResource {
             @FormParam("content") final String argContent,
             @Context final HttpServletResponse servletResponse)
             throws IOException {
-        final ArticleService articleService = new ArticleServiceImpl();
         articleService.save(new Article(argTitle, argContent));
         servletResponse.sendRedirect("../create_todo.html");
     }
@@ -108,7 +113,23 @@ public class ArticlesResource {
     public final ArticleResource getArticle(
             @PathParam("article") final String argId) {
         final int locId = Integer.valueOf(argId);
-        return new ArticleResource(uriInfo, request, locId);
+        return new ArticleResource(articleService, uriInfo, request, locId);
+    }
+
+    /**
+     * getArticleService() method.
+     * @return TODO.
+     */
+    public final ArticleService getArticleService() {
+        return articleService;
+    }
+
+    /**
+     * setArticleService(ArticleService) method.
+     * @param argArticleService TODO.
+     */
+    public void setArticleService(final ArticleService argArticleService) {
+        this.articleService = argArticleService;
     }
 
     /**

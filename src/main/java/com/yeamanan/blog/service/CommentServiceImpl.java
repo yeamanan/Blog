@@ -4,24 +4,28 @@ import com.yeamanan.blog.dao.CommentDao;
 import com.yeamanan.blog.dao.CommentDaoImpl;
 import com.yeamanan.blog.model.Comment;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 /**
  * CommentServiceImpl class is an implementation of CommentService interface.
  * @author Camelia
  */
+@Service
 public class CommentServiceImpl implements CommentService {
 
     /**
      * Comment Dao.
      */
+    @Autowired
     private CommentDao commentDao;
 
     /**
      * Constructor.
      */
-    public CommentServiceImpl() {
-        setCommentDao(CommentDaoImpl.getInstance());
-    }
+//    public CommentServiceImpl() {
+//    }
 
     /**
      * getCommentDao() method.
@@ -35,7 +39,7 @@ public class CommentServiceImpl implements CommentService {
      * setCommentDao(CommentDao) method.
      * @param argCommentDao TODO.
      */
-    private void setCommentDao(final CommentDao argCommentDao) {
+    public void setCommentDao(final CommentDao argCommentDao) {
         this.commentDao = argCommentDao;
     }
 

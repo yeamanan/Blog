@@ -1,6 +1,7 @@
 package com.yeamanan.blog.resource;
 
 import com.yeamanan.blog.model.Comment;
+import com.yeamanan.blog.service.ArticleService;
 import com.yeamanan.blog.service.CommentService;
 import com.yeamanan.blog.service.CommentServiceImpl;
 import java.io.IOException;
@@ -18,13 +19,22 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * CommentsResource class.
  * @author Camelia
  */
+@Component
 @Path("/comments")
 public class CommentsResource {
+
+    /**
+     * TODO.
+     */
+    @Autowired
+    private CommentService commentService;
 
     /**
      * TODO.
@@ -46,7 +56,6 @@ public class CommentsResource {
     @Produces(MediaType.TEXT_XML)
     public final List<Comment> getHTML() {
         final List<Comment> comments = new ArrayList<Comment>();
-        final CommentService commentService = new CommentServiceImpl();
         comments.addAll(commentService.get());
         return comments;
     }
@@ -59,7 +68,6 @@ public class CommentsResource {
     @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
     public final List<Comment> getXML() {
         final List<Comment> comments = new ArrayList<Comment>();
-        final CommentService commentService = new CommentServiceImpl();
         comments.addAll(commentService.get());
         return comments;
     }
@@ -72,7 +80,6 @@ public class CommentsResource {
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
     public final String getCount() {
-        final CommentService commentService = new CommentServiceImpl();
         return String.valueOf(commentService.count());
     }
 
@@ -89,7 +96,6 @@ public class CommentsResource {
     public final void newComment(@FormParam("content") final String argContent,
             @Context final HttpServletResponse servletResponse)
             throws IOException {
-        final CommentService commentService = new CommentServiceImpl();
         commentService.save(new Comment(argContent));
         servletResponse.sendRedirect("../create_todo.html");
     }
@@ -107,7 +113,23 @@ public class CommentsResource {
     public final CommentResource getComment(
             @PathParam("comment") final String argId) {
         final int locId = Integer.valueOf(argId);
-        return new CommentResource(uriInfo, request, locId);
+        return new CommentResource(commentService, uriInfo, request, locId);
+    }
+
+    /**
+     * getCommentService() method.
+     * @return TODO.
+     */
+    public final CommentService getCommentService() {
+        return commentService;
+    }
+
+    /**
+     * setCommentService(CommentService) method.
+     * @param argArticleService TODO.
+     */
+    public void setCommentService(final CommentService argCommentService) {
+        this.commentService = argCommentService;
     }
 
     /**

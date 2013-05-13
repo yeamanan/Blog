@@ -25,6 +25,11 @@ public class CommentResource {
     /**
      * TODO.
      */
+    private CommentService commentService;
+
+    /**
+     * TODO.
+     */
     @Context
     private UriInfo uriInfo;
 
@@ -41,15 +46,19 @@ public class CommentResource {
 
     /**
      * TODO.
+     * @param argCommentService TODO.
      * @param argUriInfo TODO.
      * @param argRequest TODO.
      * @param argId TODO.
      */
-    public CommentResource(final UriInfo argUriInfo, final Request argRequest,
+    public CommentResource(final CommentService argCommentService,
+            final UriInfo argUriInfo,
+            final Request argRequest,
             final int argId) {
-      this.uriInfo = argUriInfo;
-      this.request = argRequest;
-      this.id = argId;
+        this.commentService = argCommentService;
+        this.uriInfo = argUriInfo;
+        this.request = argRequest;
+        this.id = argId;
     }
 
     /**
@@ -57,7 +66,6 @@ public class CommentResource {
      */
     @DELETE
     public final void delete() {
-        final CommentService commentService = new CommentServiceImpl();
         commentService.remove(id);
     }
 
@@ -68,7 +76,6 @@ public class CommentResource {
     @GET
     @Produces({ MediaType.TEXT_XML })
     public final Comment getHTML() {
-        final CommentService commentService = new CommentServiceImpl();
         return commentService.get(id);
     }
 
@@ -79,7 +86,6 @@ public class CommentResource {
     @GET
     @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
     public final Comment getXML() {
-        final CommentService commentService = new CommentServiceImpl();
         return commentService.get(id);
     }
 
@@ -113,7 +119,6 @@ public class CommentResource {
      * @return TODO.
      */
     private Response putAndGetResponse(final Comment comment) {
-        final CommentServiceImpl commentService = new CommentServiceImpl();
         Response response;
         if (commentService.containsKey(comment.getId())) {
             response = Response.noContent().build();
@@ -123,6 +128,22 @@ public class CommentResource {
             commentService.save(comment);
         }
         return response;
+    }
+
+    /**
+     * getCommentService() method.
+     * @return TODO.
+     */
+    public final CommentService getCommentService() {
+        return commentService;
+    }
+
+    /**
+     * setCommentService(CommentService) method.
+     * @param argArticleService TODO.
+     */
+    public void setCommentService(final CommentService argCommentService) {
+        this.commentService = argCommentService;
     }
 
     /**

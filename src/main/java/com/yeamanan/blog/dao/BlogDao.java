@@ -15,7 +15,7 @@ public class BlogDao {
     private Session session;
 
     /**
-     * TODO.
+     * Constructor.
      */
     public BlogDao() {
         session = HibernateUtil.getSessionFactory().getCurrentSession();

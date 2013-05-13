@@ -2,7 +2,6 @@ package com.yeamanan.blog.resource;
 
 import com.yeamanan.blog.model.Article;
 import com.yeamanan.blog.service.ArticleService;
-import com.yeamanan.blog.service.ArticleServiceImpl;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -25,6 +24,11 @@ public class ArticleResource {
     /**
      * TODO.
      */
+    private ArticleService articleService;
+
+    /**
+     * TODO.
+     */
     @Context
     private UriInfo uriInfo;
 
@@ -41,15 +45,19 @@ public class ArticleResource {
 
     /**
      * TODO.
+     * @param argArticleService TODO.
      * @param argUriInfo TODO.
      * @param argRequest TODO.
      * @param argId TODO.
      */
-    public ArticleResource(final UriInfo argUriInfo, final Request argRequest,
+    public ArticleResource(final ArticleService argArticleService,
+            final UriInfo argUriInfo,
+            final Request argRequest,
             final int argId) {
-      this.uriInfo = argUriInfo;
-      this.request = argRequest;
-      this.id = argId;
+        this.articleService = argArticleService;
+        this.uriInfo = argUriInfo;
+        this.request = argRequest;
+        this.id = argId;
     }
 
     /**
@@ -57,7 +65,6 @@ public class ArticleResource {
      */
     @DELETE
     public final void delete() {
-        final ArticleService articleService = new ArticleServiceImpl();
         articleService.remove(id);
     }
 
@@ -68,7 +75,6 @@ public class ArticleResource {
     @GET
     @Produces({ MediaType.TEXT_XML })
     public final Article getHTML() {
-        final ArticleService articleService = new ArticleServiceImpl();
         return articleService.get(id);
     }
 
@@ -79,7 +85,6 @@ public class ArticleResource {
     @GET
     @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
     public final Article getXML() {
-        final ArticleService articleService = new ArticleServiceImpl();
         return articleService.get(id);
     }
 
@@ -113,7 +118,6 @@ public class ArticleResource {
      * @return TODO.
      */
     private Response putAndGetResponse(final Article article) {
-        final ArticleServiceImpl articleService = new ArticleServiceImpl();
         Response response;
         if (articleService.containsKey(article.getId())) {
             response = Response.noContent().build();
@@ -123,6 +127,22 @@ public class ArticleResource {
             articleService.save(article);
         }
         return response;
+    }
+
+    /**
+     * getArticleService() method.
+     * @return TODO.
+     */
+    public final ArticleService getArticleService() {
+        return articleService;
+    }
+
+    /**
+     * setArticleService(ArticleService) method.
+     * @param argArticleService TODO.
+     */
+    public void setArticleService(final ArticleService argArticleService) {
+        this.articleService = argArticleService;
     }
 
     /**

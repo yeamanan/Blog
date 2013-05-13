@@ -2,31 +2,22 @@ package com.yeamanan.blog.dao;
 
 import com.yeamanan.blog.model.Article;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
 /**
  * ArticleDaoImpl class is an implementation of ArticleDao interface.
  * @author Yeam Anan (yeamanan@gmail.com)
  */
+@Repository
 public class ArticleDaoImpl extends BlogDao
     implements ArticleDao {
 
     /**
-     * Singleton of the class.
+     * Constructor.
      */
-    private static ArticleDaoImpl instance = null;
-
-    /**
-     * getInstance() method.
-     * @return the singleton of the class
-     */
-    public static ArticleDaoImpl getInstance() {
-        synchronized (ArticleDaoImpl.class) {
-            if (instance == null) {
-                instance = new ArticleDaoImpl();
-            }
-        }
-        return instance;
-    }
+//    public ArticleDaoImpl() {
+//        super();
+//    }
 
     /**
      * count() method.
@@ -53,7 +44,6 @@ public class ArticleDaoImpl extends BlogDao
         getSession().beginTransaction();
         List<Article> articles;
         articles = getSession().getNamedQuery("Article.getAll").list();
-        //articles = getSession().createQuery("from Article").list();
         getSession().getTransaction().commit();
         return articles;
     }

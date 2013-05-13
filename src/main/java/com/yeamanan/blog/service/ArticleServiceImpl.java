@@ -4,24 +4,29 @@ import com.yeamanan.blog.dao.ArticleDao;
 import com.yeamanan.blog.dao.ArticleDaoImpl;
 import com.yeamanan.blog.model.Article;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.stereotype.Service;
 
 /**
  * ArticleServiceImpl class is an implementation of ArticleService interface.
  * @author Yeam Anan (yeamanan@gmail.com)
  */
+@Service
 public class ArticleServiceImpl implements ArticleService {
 
     /**
      * Article Dao.
      */
+    @Autowired
     private ArticleDao articleDao;
 
     /**
      * Constructor.
      */
-    public ArticleServiceImpl() {
-        setArticleDao(ArticleDaoImpl.getInstance());
-    }
+//    public ArticleServiceImpl() {
+//    }
 
     /**
      * getArticleDao() method.
@@ -35,7 +40,7 @@ public class ArticleServiceImpl implements ArticleService {
      * setArticleDao(ArticleDao) method.
      * @param argArticleDao TODO.
      */
-    private void setArticleDao(final ArticleDao argArticleDao) {
+    public void setArticleDao(final ArticleDao argArticleDao) {
         this.articleDao = argArticleDao;
     }
 
