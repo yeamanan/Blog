@@ -4,4 +4,6 @@
 *.jar
 *.war
 *.ear
-/target
+
+# Target Folder #
+target/
